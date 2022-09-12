@@ -4,7 +4,7 @@ from .serializers import ProfileSerializer
 from .models import Profile
 
 
-class ProfileList(generics.ListAPIView):
+class ProfileList(generics.ListCreateAPIView):
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all()
         
