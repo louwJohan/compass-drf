@@ -53,17 +53,7 @@ REST_AUTH_SERIALIZERS = {
 }
 
 SECRET_KEY = {'SECRET_KEY': os.environ.get('SECRET_KEY')}
-# CSRF_TRUSTED_ORIGINS = ['https://8000-louwjohan-drfcompass-7vrk7xwmsyx.ws-eu63.gitpod.io',
-#                         'https://drf-compass.herokuapp.com',
-#                         'https://3000-louwjohan-compass-lq3yati79ai.ws-eu64.gitpod.io']
-# CSRF_COOKIE_SECURE = False
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [os.environ.get('ALLOWED_HOST'),

@@ -1,9 +1,10 @@
 from rest_framework import generics
-from .serializers import ProfileSerializer
 from reapi.permissions import IsOwnerOrReadOnly
+from .serializers import ProfileSerializer
 from .models import Profile
 
-class ProfileList(generics.ListCreateAPIView):
+
+class ProfileList(generics.ListAPIView):
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all()
         
