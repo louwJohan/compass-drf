@@ -9,9 +9,8 @@ from .settings import (
 @api_view()
 def root_route(request):
     return Response({
-        "message": "Welcome to my Real Estate API!"
+        "message": "Welcome to my drf API!"
     })
-
 
 @api_view(['POST'])
 def logout_route(request):
@@ -34,4 +33,4 @@ def logout_route(request):
         samesite=JWT_AUTH_SAMESITE,
         secure=JWT_AUTH_SECURE,
     )
-    return 
+    return response
