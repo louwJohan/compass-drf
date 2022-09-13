@@ -21,14 +21,14 @@ class Listing(models.Model):
     area = models.CharField(max_length=255)
     price = models.IntegerField()
     commerce_type = models.CharField(choices=COMMERCE_TYPE, max_length=15)
-    image_one = models.ImageField(upload_to='images/', default='../Default_Image_Thumbnail_loxqet.png')
-    image_two = models.ImageField(upload_to='images/',default='../Default_Image_Thumbnail_loxqet.png')
-    image_three = models.ImageField(upload_to='images/', default='../Default_Image_Thumbnail_loxqet.png')
-    image_four = models.ImageField(upload_to='images/', default='../Default_Image_Thumbnail_loxqet.png')
-    image_five = models.ImageField(upload_to='images/', default='../Default_Image_Thumbnail_loxqet.png')
-    image_six = models.ImageField(upload_to='images/', default='../Default_Image_Thumbnail_loxqet.png')
-    image_seven = models.ImageField(upload_to='images/', default='../Default_Image_Thumbnail_loxqet.png')
-    image_eight = models.ImageField(upload_to='images/', default='../Default_Image_Thumbnail_loxqet.png')
+    image_one = models.ImageField(upload_to='images/', default='../Placeholder-Clipart-Icon_dhzywt.png')
+    image_two = models.ImageField(upload_to='images/',default='../Placeholder-Clipart-Icon_dhzywt.png')
+    image_three = models.ImageField(upload_to='images/', default='../Placeholder-Clipart-Icon_dhzywt.png')
+    image_four = models.ImageField(upload_to='images/', default='../Placeholder-Clipart-Icon_dhzywt.png')
+    image_five = models.ImageField(upload_to='images/', default='../Placeholder-Clipart-Icon_dhzywt.png')
+    image_six = models.ImageField(upload_to='images/', default='../Placeholder-Clipart-Icon_dhzywt.png')
+    image_seven = models.ImageField(upload_to='images/', default='../Placeholder-Clipart-Icon_dhzywt.png')
+    image_eight = models.ImageField(upload_to='images/', default='../Placeholder-Clipart-Icon_dhzywt.png')
     
 
     class Meta:
