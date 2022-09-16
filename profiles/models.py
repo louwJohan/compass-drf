@@ -9,9 +9,8 @@ class Profile(models.Model):
     name = models.CharField(max_length=150, blank=True)
     content = models.TextField(blank=True)
     image = models.ImageField(
-        upload_to='images/', default='../avatar_hrwoqk.png'
+        upload_to='images/', default='../default_profile_ik0b2z.jpg'
     )
-
     class Meta:
         ordering =['-created_at']
 

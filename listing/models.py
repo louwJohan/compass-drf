@@ -21,15 +21,15 @@ class Listing(models.Model):
     area = models.CharField(max_length=255)
     price = models.CharField(max_length=255)
     commerce_type = models.CharField(choices=COMMERCE_TYPE, max_length=15)
-    image_one = models.ImageField(upload_to='images/', default='../Placeholder-Clipart-Icon_dhzywt.png')
-    image_two = models.ImageField(upload_to='images/', default='../Placeholder-Clipart-Icon_dhzywt.png')
-    image_three = models.ImageField(upload_to='images/', default='../Placeholder-Clipart-Icon_dhzywt.png')
-    image_four = models.ImageField(upload_to='images/', default='../Placeholder-Clipart-Icon_dhzywt.png')
-    image_five = models.ImageField(upload_to='images/', default='../Placeholder-Clipart-Icon_dhzywt.png')
-    image_six = models.ImageField(upload_to='images/', default='../Placeholder-Clipart-Icon_dhzywt.png')
-    image_seven = models.ImageField(upload_to='images/', default='../Placeholder-Clipart-Icon_dhzywt.png')
-    image_eight = models.ImageField(upload_to='images/', default='../Placeholder-Clipart-Icon_dhzywt.png')
-    
+    image_one = models.ImageField(upload_to='images/', default='../default_post_kqniyi.jpg')
+    image_two = models.ImageField(upload_to='images/', default='../default_post_kqniyi.jpg')
+    image_three = models.ImageField(upload_to='images/', default='../default_post_kqniyi.jpg')
+    image_four = models.ImageField(upload_to='images/', default='../default_post_kqniyi.jpg')
+    image_five = models.ImageField(upload_to='images/', default='../default_post_kqniyi.jpg')
+    image_six = models.ImageField(upload_to='images/', default='../default_post_kqniyi.jpg')
+    image_seven = models.ImageField(upload_to='images/', default='../default_post_kqniyi.jpg')
+    image_eight = models.ImageField(upload_to='images/', default='../default_post_kqniyi.jpg')
+
 
     class Meta:
         ordering = ['-created_at']
