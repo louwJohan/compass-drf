@@ -23,6 +23,7 @@ class ListingList(generics.ListCreateAPIView):
         'owner__followed__owner__profile',
         'saved__owner__profile',
         'owner__profile',
+        'commerce_type'
     ]
 
     search_fields = [
