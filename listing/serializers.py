@@ -1,7 +1,8 @@
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from rest_framework import serializers
-from .models import Listing
 from saved.models import Saved
+from .models import Listing
+
 
 class ListingSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
@@ -13,10 +14,11 @@ class ListingSerializer(serializers.ModelSerializer):
     saved_count = serializers.ReadOnlyField()
     messages_count = serializers.ReadOnlyField()
 
-
     def get_is_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
+    
+    
     
     def get_created_at(self, obj):
         return naturaltime(obj.created_at)
