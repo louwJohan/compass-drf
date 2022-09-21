@@ -4,6 +4,22 @@ from saved.models import Saved
 from .models import Listing
 
 
+def validate_image(value):
+    if value.size > 1024 * 1024 * 2:
+        raise serializers.ValidationError(
+            'Image size larger than 2MB'
+        )
+    if value.image.width > 4096:
+        raise serializers.ValidationError(
+            'Image width larger than 4096px'
+        )
+    if value.image.height > 4096:
+        raise serializers.ValidationError(
+            'Image height larger than 4096px'
+        )
+    return value 
+
+
 class ListingSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
@@ -13,13 +29,19 @@ class ListingSerializer(serializers.ModelSerializer):
     saved_id = serializers.SerializerMethodField()
     saved_count = serializers.ReadOnlyField()
     messages_count = serializers.ReadOnlyField()
+    image_one = serializers.ImageField(validators=[validate_image])
+    image_two = serializers.ImageField(validators=[validate_image])
+    image_three = serializers.ImageField(validators=[validate_image])
+    image_four = serializers.ImageField(validators=[validate_image])
+    image_five = serializers.ImageField(validators=[validate_image])
+    image_six = serializers.ImageField(validators=[validate_image])
+    image_seven = serializers.ImageField(validators=[validate_image])
+    image_eight = serializers.ImageField(validators=[validate_image])
 
     def get_is_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
-    
-    
-    
+
     def get_created_at(self, obj):
         return naturaltime(obj.created_at)
 
