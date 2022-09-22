@@ -105,6 +105,7 @@ INSTALLED_APPS = [
     'saved',
     'message',
     'listing',
+    "phonenumber_field",
 
 ]
 
