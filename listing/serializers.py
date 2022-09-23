@@ -29,14 +29,14 @@ class ListingSerializer(serializers.ModelSerializer):
     saved_id = serializers.SerializerMethodField()
     saved_count = serializers.ReadOnlyField()
     messages_count = serializers.ReadOnlyField()
-    image_one = serializers.ImageField(validators=[validate_image])
-    image_two = serializers.ImageField(validators=[validate_image])
-    image_three = serializers.ImageField(validators=[validate_image])
-    image_four = serializers.ImageField(validators=[validate_image])
-    image_five = serializers.ImageField(validators=[validate_image])
-    image_six = serializers.ImageField(validators=[validate_image])
-    image_seven = serializers.ImageField(validators=[validate_image])
-    image_eight = serializers.ImageField(validators=[validate_image])
+    # image_one = serializers.ReadOnlyField(validators=[validate_image])
+    # image_two = serializers.ReadOnlyField(validators=[validate_image])
+    # image_three = serializers.ReadOnlyField(validators=[validate_image])
+    # image_four = serializers.ReadOnlyField(validators=[validate_image])
+    # image_five = serializers.ReadOnlyField(validators=[validate_image])
+    # image_six = serializers.ReadOnlyField(validators=[validate_image])
+    # image_seven = serializers.ReadOnlyField(validators=[validate_image])
+    # image_eight = serializers.ReadOnlyField(validators=[validate_image])
 
     def get_is_owner(self, obj):
         request = self.context['request']
