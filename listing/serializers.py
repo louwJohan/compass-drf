@@ -26,9 +26,11 @@ class ListingSerializer(serializers.ModelSerializer):
     created_at = serializers.SerializerMethodField()
     updated_at = serializers.SerializerMethodField()
     saved_id = serializers.SerializerMethodField()
-    saved_id = serializers.SerializerMethodField()
     saved_count = serializers.ReadOnlyField()
     messages_count = serializers.ReadOnlyField()
+    profile_id = serializers.ReadOnlyField(source='owner.profile.id')
+    profile_image = serializers.ReadOnlyField(source='owner.profile.image.url',
+                                              default='../default_profile_ik0b2z.jpg')
     # image_one = serializers.ReadOnlyField(validators=[validate_image])
     # image_two = serializers.ReadOnlyField(validators=[validate_image])
     # image_three = serializers.ReadOnlyField(validators=[validate_image])
@@ -66,4 +68,5 @@ class ListingSerializer(serializers.ModelSerializer):
             'image_one', 'image_two', 'image_three', 'image_three',
             'image_four', 'image_five', 'image_six', 'image_seven',
             'image_eight','saved_id', 'saved_count', 'messages_count',
+            'profile_image','profile_id',
             ]
