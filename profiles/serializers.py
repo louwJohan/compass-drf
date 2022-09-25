@@ -1,7 +1,9 @@
 from rest_framework import serializers
-from .models import Profile
 from follow.models import Follower
 from listing.models import Listing
+from saved.models import Saved
+from .models import Profile
+
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -12,7 +14,19 @@ class ProfileSerializer(serializers.ModelSerializer):
     followers_count = serializers.ReadOnlyField()
     following_count = serializers.ReadOnlyField()
     listings = serializers.SerializerMethodField()
+    saved_count = serializers.SerializerMethodField()
+    saved = serializers.SerializerMethodField()
 
+    def get_saved_count(self,obj):
+        saved = Saved.objects.filter(owner=obj.owner)
+        return (len(saved))
+
+    def get_saved(self,obj):
+        saved = Saved.objects.filter(owner=obj.owner)
+        saved_list = []
+        for item in saved:
+            saved_list.append(item.listing.id)
+        return saved_list
 
     def get_listings(self,obj):
         listings = Listing.objects.filter(owner=obj.owner)
@@ -40,5 +54,5 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = ['id', 'owner', 'created_at', 'updated_at', 'name',
                   'content', 'image', 'is_owner','following_id',
                   'listing_count', 'followers_count', 'following_count',
-                  'listings'
+                  'listings', 'saved_count', 'saved'
                  ]
