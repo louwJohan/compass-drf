@@ -17,6 +17,9 @@ class Message(models.Model):
     phone_number = PhoneNumberField(blank=True)
     title = models.CharField(max_length=255)
     content = models.TextField()
-
+    
+    class Meta:
+        ordering = ['-created_at']
+        
     def __str__(self):
         return f"{self.owner}, {self.title}"
