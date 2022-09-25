@@ -1,9 +1,9 @@
 from rest_framework import serializers
+from message.models import Message
 from follow.models import Follower
 from listing.models import Listing
 from saved.models import Saved
 from .models import Profile
-
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -16,25 +16,52 @@ class ProfileSerializer(serializers.ModelSerializer):
     listings = serializers.SerializerMethodField()
     saved_count = serializers.SerializerMethodField()
     saved = serializers.SerializerMethodField()
+    messages_count = serializers.SerializerMethodField()
+    messages = serializers.SerializerMethodField()
 
-    def get_saved_count(self,obj):
+    def get_saved_count(self, obj):
         saved = Saved.objects.filter(owner=obj.owner)
         return (len(saved))
 
-    def get_saved(self,obj):
+    def get_messages_count(self, obj):
+        messages = Message.objects.all()
+        message_list = []
+        listings = Listing.objects.filter(owner=obj.owner)
+        listing_list = []
+        for listing in listings:
+            listing_list.append(listing.id)
+        for message in messages:
+            if message.listing.id in listing_list:
+                message_list.append(message.id)
+        return len(message_list)
+
+    def get_messages(self, obj):
+        messages = Message.objects.all()
+        message_list = []
+        listings = Listing.objects.filter(owner=obj.owner)
+        listing_list = []
+        for listing in listings:
+            listing_list.append(listing.id)
+        for message in messages:
+            if message.listing.id in listing_list:
+                message_list.append(message.id)
+        return message_list
+
+        
+
+    def get_saved(self, obj):
         saved = Saved.objects.filter(owner=obj.owner)
         saved_list = []
         for item in saved:
             saved_list.append(item.listing.id)
         return saved_list
 
-    def get_listings(self,obj):
+    def get_listings(self, obj):
         listings = Listing.objects.filter(owner=obj.owner)
         listing_list = []
         for listing in listings:
             listing_list.append(listing.id)
         return listing_list
-
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -52,7 +79,8 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['id', 'owner', 'created_at', 'updated_at', 'name',
-                  'content', 'image', 'is_owner','following_id',
+                  'content', 'image', 'is_owner', 'following_id',
                   'listing_count', 'followers_count', 'following_count',
-                  'listings', 'saved_count', 'saved'
-                 ]
+                  'listings', 'saved_count', 'saved', 'messages_count',
+                  'messages'
+                  ]
