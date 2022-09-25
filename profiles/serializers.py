@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import Profile
 from follow.models import Follower
+from listing.models import Listing
+
 
 class ProfileSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
@@ -9,6 +11,16 @@ class ProfileSerializer(serializers.ModelSerializer):
     listing_count = serializers.ReadOnlyField()
     followers_count = serializers.ReadOnlyField()
     following_count = serializers.ReadOnlyField()
+    listings = serializers.SerializerMethodField()
+
+
+    def get_listings(self,obj):
+        listings = Listing.objects.filter(owner=obj.owner)
+        listing_list = []
+        for listing in listings:
+            listing_list.append(listing.id)
+        return listing_list
+
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -20,7 +32,6 @@ class ProfileSerializer(serializers.ModelSerializer):
             following = Follower.objects.filter(owner=user,
                                                 followed=obj.owner
                                                 ).first()
-            print(following)
             return following.id if following else None
         return None
 
@@ -29,4 +40,5 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = ['id', 'owner', 'created_at', 'updated_at', 'name',
                   'content', 'image', 'is_owner','following_id',
                   'listing_count', 'followers_count', 'following_count',
+                  'listings'
                  ]
