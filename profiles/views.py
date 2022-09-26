@@ -7,6 +7,7 @@ from .models import Profile
 
 
 class ProfileList(generics.ListAPIView):
+    permission_classes = [IsOwnerOrReadOnly]
     serializer_class = ProfileSerializer
     queryset = Profile.objects.annotate(
         listing_count=Count('owner__listing', distinct=True),
@@ -33,7 +34,7 @@ class ProfileList(generics.ListAPIView):
         
 class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ProfileSerializer
-    permission_class = [IsOwnerOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly]
     queryset = Profile.objects.annotate(
         listing_count=Count('owner__listing', distinct=True),
         followers_count=Count('owner__followed', distinct=True),

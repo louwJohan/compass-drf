@@ -1,4 +1,5 @@
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import User
 from listing.models import Listing
 
@@ -13,7 +14,7 @@ class Message(models.Model):
     name = models.CharField(max_length=255, default="name")
     surname = models.CharField(max_length=255, default="surname")
     email = models.EmailField(max_length=254, default="mail@email.com")
-    phone_number = models.CharField(max_length=20, blank=True)
+    phone_number = PhoneNumberField(blank=True)
     title = models.CharField(max_length=255)
     content = models.TextField()
     
