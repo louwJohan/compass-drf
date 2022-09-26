@@ -5,30 +5,42 @@ from .models import Message
 
 class MessageSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
+    listing_owner = serializers.SerializerMethodField()
+
+    def get_listing_owner(self, obj):
+        listing = Listing.objects.filter(pk=obj.listing.id)
+        values = listing.values_list()
+        return values[0][1]
 
     def get_is_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
+        
 
     class Meta:
         model = Message
         fields = ['id', 'owner', 'listing', 'created_at',
                   'title', 'content', 'name', 'surname',
-                  'phone_number', 'email']
+                  'phone_number', 'email', 'listing_owner']
 
 
+class MessageDetailSerializer(MessageSerializer):
+    """
+    Serializer for the Comment model used in Detail view
+    Post is a read only field so that we dont have to set it on each update
+    """
+    listing = serializers.ReadOnlyField(source='listing.id')
+    listing_owner = serializers.SerializerMethodField()
 
-# class MessageDetailSerializer(MessageSerializer):
-#     """
-#     Serializer for the Comment model used in Detail view
-#     Post is a read only field so that we dont have to set it on each update
-#     """
-#     listing_owner = serializers.SerializerMethodField()
-#     listing = serializers.ReadOnlyField(source='listing.id')
-    
-#     def get_listing_owner(self, obj):
-#         listing_id = obj.listing.id
-#         listing = Listing.objects.filter(pk=listing_id)
-#         print(listing)
+    def get_listing_owner(self, obj):
+        listing = Listing.objects.filter(pk=obj.listing.id)
+        values = listing.values_list()
+        return values[0][1]
+
+    class Meta:
+        model = Message
+        fields = ['id', 'owner', 'listing', 'created_at',
+                  'title', 'content', 'name', 'surname',
+                  'phone_number', 'email','listing_owner']
 
     
