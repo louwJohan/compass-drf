@@ -6,9 +6,9 @@ class Profile(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=150, blank=True)
-    content = models.TextField(blank=True)
-    image = models.ImageField(
+    profile_name = models.CharField(max_length=150, blank=True)
+    profile_content = models.TextField(blank=True)
+    profile_image = models.ImageField(
         upload_to='images/', default='../default_profile_ik0b2z.jpg'
     )
     class Meta:
