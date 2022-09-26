@@ -14,10 +14,9 @@ def validate(value):
         )
     if value.image.height > 4096:
         raise serializers.ValidationError(
-            'Image height larger than 4096px'
+                'Image height larger than 4096px'
         )
     return value
-
 
 class ListingSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
@@ -38,6 +37,8 @@ class ListingSerializer(serializers.ModelSerializer):
     image_six = serializers.ImageField(validators=[validate])
     image_seven = serializers.ImageField(validators=[validate])
     image_eight = serializers.ImageField(validators=[validate])
+
+    
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -66,6 +67,6 @@ class ListingSerializer(serializers.ModelSerializer):
             'bedrooms', 'area', 'price', 'commerce_type', 'saved_id',
             'image_one', 'image_two', 'image_three', 'image_three',
             'image_four', 'image_five', 'image_six', 'image_seven',
-            'image_eight','saved_id', 'saved_count', 'messages_count',
-            'profile_image','profile_id'
+            'image_eight', 'saved_id', 'saved_count', 'messages_count',
+            'profile_image', 'profile_id'
             ]
