@@ -11,7 +11,7 @@ class MessageSerializer(serializers.ModelSerializer):
         model = Message
         fields = ['id', 'owner', 'listing', 'created_at',
                   'title', 'content', 'name', 'surname',
-                  'phone_number', 'email', 'listing_owner']
+                  'phone_number', 'email']
     
     
 
