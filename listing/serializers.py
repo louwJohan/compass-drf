@@ -4,21 +4,6 @@ from saved.models import Saved
 from .models import Listing
 
 
-def validate_image(value):
-    if value.size > 1024 * 1024 * 2:
-        raise serializers.ValidationError(
-            'Image size larger than 2MB'
-        )
-    if value.image.width > 4096:
-        raise serializers.ValidationError(
-            'Image width larger than 4096px'
-        )
-    if value.image.height > 4096:
-        raise serializers.ValidationError(
-            'Image height larger than 4096px'
-        )
-    return value 
-
 
 class ListingSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
@@ -31,14 +16,6 @@ class ListingSerializer(serializers.ModelSerializer):
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url',
                                               default='../default_profile_ik0b2z.jpg')
-    # image_one = serializers.ReadOnlyField(validators=[validate_image])
-    # image_two = serializers.ReadOnlyField(validators=[validate_image])
-    # image_three = serializers.ReadOnlyField(validators=[validate_image])
-    # image_four = serializers.ReadOnlyField(validators=[validate_image])
-    # image_five = serializers.ReadOnlyField(validators=[validate_image])
-    # image_six = serializers.ReadOnlyField(validators=[validate_image])
-    # image_seven = serializers.ReadOnlyField(validators=[validate_image])
-    # image_eight = serializers.ReadOnlyField(validators=[validate_image])
 
     def get_is_owner(self, obj):
         request = self.context['request']
