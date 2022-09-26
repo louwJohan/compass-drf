@@ -2,7 +2,7 @@ from rest_framework import generics, permissions
 from django_filters.rest_framework import DjangoFilterBackend
 from reapi.permissions import IsOwnerOrReadOnly
 from .models import Message
-from .serializers import MessageSerializer, MessageDetailSerializer
+from .serializers import MessageSerializer
 
 
 
@@ -19,5 +19,5 @@ class MessageList(generics.ListCreateAPIView):
 
 class MessageDetail(generics.RetrieveDestroyAPIView):
     permission_classes = [IsOwnerOrReadOnly]
-    serializer_class = MessageDetailSerializer
+    serializer_class = MessageSerializer
     queryset = Message.objects.all()
