@@ -24,6 +24,28 @@ class MessageTests(APITestCase):
             image_five='', image_six='', image_seven='', image_eight=''
         )
 
+        one = Listing.objects.get(pk=1)
+        two = Listing.objects.get(pk=2)
+
+        Message.objects.create(owner=ben,
+                               listing=one,
+                               name='Ben',
+                               surname='Owens',
+                               email='beno@mail.com',
+                               phone_number='09878923456',
+                               title='Viewing',
+                               content='Hi I would like to view the property'
+                                )
+        Message.objects.create(owner=peter,
+                               listing=two,
+                               name='Peter',
+                               surname='Pan',
+                               email='pp@mail.com',
+                               phone_number='09878923456',
+                               title='Viewing',
+                               content='Hi I would like to view the property'
+                                )
+
     def test_logged_in_user_can_create_message(self):
         self.client.login(username='ben', password='pass')
         response = self.client.post('/messages/', {'owner': 'ben',
@@ -36,34 +58,16 @@ class MessageTests(APITestCase):
                                                    'content': 'Hi I would like to view the property'
                                                    })
         count = Message.objects.count()
-        self.assertEqual(count, 1)
+        self.assertEqual(count, 3)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
-    def test_can_retrieve_listing_using_valid_id(self):
-        response = self.client.get('/listings/1')
-        self.assertEqual(response.data['title'], 'test1')
+    def test_can_retrieve_message_using_valid_id(self):
+        self.client.login(username='ben', password='pass')
+        response = self.client.get('/messages/1')
+        self.assertEqual(response.data['title'], 'Viewing')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-#     def test_can_retrieve_listing_using_invalid_id(self):
-#         response = self.client.get('/listings/100/')
-#         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-
-#     def test_user_can_update_own_listing(self):
-#         self.client.login(username='ben', password='pass')
-#         response = self.client.put('/listings/1', {'title': 'new title',
-#                                                    'description':'house',
-#                                                    'type_of_property': 'detached_house',
-#                                                    'bedrooms': '4',
-#                                                    'area': 'Leeds', 
-#                                                    'price': '200000', 
-#                                                    'commerce_type': 'sell',
-#                                                     })
-#         listing = Listing.objects.filter(pk=1).first()
-#         # self.assertEqual(listing.title, 'new title')
-#         # self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-#     def test_user_can_update_another_users_listing(self):
-#         self.client.login(username='peter', password='word')
-#         response = self.client.put('/listings/1', {'title': 'new title'})
-#         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+    def test_can_retrieve_message_using_invalid_id(self):
+        response = self.client.get('/messages/100/')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
