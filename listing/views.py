@@ -24,16 +24,14 @@ class ListingList(generics.ListCreateAPIView):
         'saved__owner__profile',
         'owner__profile',
         'commerce_type',
-        'owner'
+        'owner', 'bedrooms',
+        'area', 'price',
+        'type_of_property'
     ]
 
     search_fields = [
         'owner__username',
         'title',
-        'bedrooms',
-        'area',
-        'type_of_property',
-        'price',
 
     ]
     ordering_fields = [
