@@ -4,6 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from reapi.permissions import IsOwnerOrReadOnly
 from .models import Listing
 from .serializers import ListingSerializer
+from .filters import ListingFilter
 
 
 class ListingList(generics.ListCreateAPIView):
@@ -18,16 +19,17 @@ class ListingList(generics.ListCreateAPIView):
         filters.SearchFilter,
         DjangoFilterBackend,
     ]
+    filterset_class = ListingFilter
 
-    filterset_fields = [
-        'owner__followed__owner__profile',
-        'saved__owner__profile',
-        'owner__profile',
-        'commerce_type',
-        'owner', 'bedrooms',
-        'area', 'price',
-        'type_of_property'
-    ]
+    # filterset_fields = [
+    #     'owner__followed__owner__profile',
+    #     'saved__owner__profile',
+    #     'owner__profile',
+    #     'commerce_type',
+    #     'owner', 'bedrooms',
+    #     'area', 'price',
+    #     'type_of_property'
+    # ]
 
     search_fields = [
         'owner__username',
