@@ -5,6 +5,9 @@ from .models import Listing
 
 
 class ListingSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Listings model
+    """
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
     created_at = serializers.SerializerMethodField()
@@ -14,21 +17,33 @@ class ListingSerializer(serializers.ModelSerializer):
     messages_count = serializers.ReadOnlyField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url',
-                                              default='../default_profile_ik0b2z.jpg')
-
-    
+                                              default='../default_profile_ik0b2z.jpg') 
 
     def get_is_owner(self, obj):
+        """
+        Function to get owner of listing
+        """
         request = self.context['request']
         return request.user == obj.owner
 
     def get_created_at(self, obj):
+        """
+        Function to get time and date when listing
+        was created
+        """
         return naturaltime(obj.created_at)
 
     def get_updated_at(self, obj):
+        """
+        Function to get time and date when listing was
+        updated
+        """
         return naturaltime(obj.updated_at)
-    
+
     def get_saved_id(self, obj):
+        """
+        Function to get ID of user that saved the listing
+        """
         user = self.context['request'].user
         if user.is_authenticated:
             saved = Saved.objects.filter(
@@ -38,6 +53,9 @@ class ListingSerializer(serializers.ModelSerializer):
         return None
 
     class Meta:
+        """
+        Setting fields for serializer
+        """
         model = Listing
         fields = [
             'id', 'owner', 'created_at', 'updated_at', 'title',

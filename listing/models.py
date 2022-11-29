@@ -12,6 +12,9 @@ COMMERCE_TYPE = (('sell', 'Sell'), ('rent', 'Rent'))
 
 
 class Listing(models.Model):
+    """
+    Model for Listings
+    """
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -59,4 +62,4 @@ class Listing(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f'{self.id} {self.title}' 
+        return f'{self.pk} {self.title}'
