@@ -7,6 +7,9 @@ from .models import Profile
 
 
 class ProfileList(generics.ListAPIView):
+    """
+    View for the Profile List serializer
+    """
     permission_classes = [IsOwnerOrReadOnly]
     serializer_class = ProfileSerializer
     queryset = Profile.objects.annotate(
@@ -23,7 +26,7 @@ class ProfileList(generics.ListAPIView):
     filterset_fields = [
         'owner__following__followed__profile',
     ]
-    
+
     ordering_fields = [
         'listing_count',
         'followers_count',
@@ -31,8 +34,12 @@ class ProfileList(generics.ListAPIView):
         'owner__following__created_at',
         'owner__followed__created_at',
     ]
-        
+
+
 class ProfileDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    View for Profile detail
+    """
     serializer_class = ProfileSerializer
     permission_classes = [IsOwnerOrReadOnly]
     queryset = Profile.objects.annotate(

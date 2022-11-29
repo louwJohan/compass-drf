@@ -4,18 +4,26 @@ from .models import Message
 
 
 class MessageSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Messages
+    """
     owner = serializers.ReadOnlyField(source='owner.username')
     listing_owner = serializers.SerializerMethodField()
 
     def get_listing_owner(self, obj):
+        """
+        Function to get listing owner
+        """
         listing = Listing.objects.filter(pk=obj.listing.id)
         values = listing.values_list()
         return values[0][1]
 
     def get_is_owner(self, obj):
+        """
+        Function gets message owner
+        """
         request = self.context['request']
         return request.user == obj.owner
-        
 
     class Meta:
         model = Message
@@ -26,13 +34,15 @@ class MessageSerializer(serializers.ModelSerializer):
 
 class MessageDetailSerializer(MessageSerializer):
     """
-    Serializer for the Comment model used in Detail view
-    Post is a read only field so that we dont have to set it on each update
+    Serializer for the Message model used in Detail view
     """
     listing = serializers.ReadOnlyField(source='listing.id')
     listing_owner = serializers.SerializerMethodField()
 
     def get_listing_owner(self, obj):
+        """
+        Function to get listing owner
+        """
         listing = Listing.objects.filter(pk=obj.listing.id)
         values = listing.values_list()
         return values[0][1]
@@ -41,6 +51,4 @@ class MessageDetailSerializer(MessageSerializer):
         model = Message
         fields = ['id', 'owner', 'listing', 'created_at',
                   'title', 'content', 'name', 'surname',
-                  'phone_number', 'email','listing_owner']
-
-    
+                  'phone_number', 'email', 'listing_owner']

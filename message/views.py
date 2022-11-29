@@ -5,8 +5,10 @@ from .models import Message
 from .serializers import MessageSerializer, MessageDetailSerializer
 
 
-
 class MessageList(generics.ListCreateAPIView):
+    """
+    View for Message list serializer
+    """
     serializer_class = MessageSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Message.objects.all()
@@ -18,6 +20,9 @@ class MessageList(generics.ListCreateAPIView):
 
 
 class MessageDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    View for message detail serializer
+    """
     permission_classes = [IsOwnerOrReadOnly]
     serializer_class = MessageDetailSerializer
     queryset = Message.objects.all()

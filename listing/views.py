@@ -8,6 +8,9 @@ from .filters import ListingFilter
 
 
 class ListingList(generics.ListCreateAPIView):
+    """
+    Generic view for Listing List
+    """
     serializer_class = ListingSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     queryset = Listing.objects.annotate(
@@ -47,6 +50,9 @@ class ListingList(generics.ListCreateAPIView):
 
 
 class ListingDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Class based view for Listing Detail
+    """
     permission_classes = [IsOwnerOrReadOnly]
     serializer_class = ListingSerializer
     queryset = Listing.objects.annotate(

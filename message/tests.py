@@ -6,7 +6,13 @@ from .models import Message
 
 
 class MessageTests(APITestCase):
+    """
+    Tests for message app
+    """
     def setUp(self):
+        """
+        Function to setup users and listing
+        """
         ben = User.objects.create_user(username='ben', password='pass')
         peter = User.objects.create_user(username='peter', password='word')
         Listing.objects.create(
@@ -35,7 +41,7 @@ class MessageTests(APITestCase):
                                phone_number='09878923456',
                                title='Viewing',
                                content='Hi I would like to view the property'
-                                )
+                               )
         Message.objects.create(owner=peter,
                                listing=two,
                                name='Peter',
@@ -44,7 +50,7 @@ class MessageTests(APITestCase):
                                phone_number='09878923456',
                                title='Viewing',
                                content='Hi I would like to view the property'
-                                )
+                               )
 
     def test_logged_in_user_can_create_message(self):
         self.client.login(username='ben', password='pass')
@@ -61,13 +67,18 @@ class MessageTests(APITestCase):
         self.assertEqual(count, 3)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-
     def test_can_retrieve_message_using_valid_id(self):
+        """
+        Test if message can be retrieved with valid id
+        """
         self.client.login(username='ben', password='pass')
         response = self.client.get('/messages/1')
         self.assertEqual(response.data['title'], 'Viewing')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_can_retrieve_message_using_invalid_id(self):
+        """
+        Test if message can be retrieved with  an invalid id
+        """
         response = self.client.get('/messages/100/')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)

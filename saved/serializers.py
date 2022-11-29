@@ -4,8 +4,10 @@ from .models import Saved
 
 
 class SavedSerializer(serializers.ModelSerializer):
+    """
+    Serializer for saved model
+    """
     owner = serializers.ReadOnlyField(source='owner.username')
-
 
     class Meta:
         model = Saved
@@ -18,5 +20,5 @@ class SavedSerializer(serializers.ModelSerializer):
             return super().create(validated_data)
         except IntegrityError:
             raise serializers.ValidationError({
-                'detail': 'possible duplicate'
-            })
+                                               'detail': 'possible duplicate'
+                                              })

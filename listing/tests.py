@@ -98,18 +98,21 @@ class ListingDetailViewTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_user_can_update_own_listing(self):
+        """
+        Test if user can update listing
+        """
         self.client.login(username='ben', password='pass')
         response = self.client.put('/listings/1', {'title': 'new title',
-                                                   'description':'house',
+                                                   'description': 'house',
                                                    'type_of_property': 'detached_house',
                                                    'bedrooms': '4',
                                                    'area': 'Leeds',
                                                    'price': '200000',
                                                    'commerce_type': 'sell',
-                                                    })
+                                                   })
         listing = Listing.objects.filter(pk=1).first()
-        # self.assertEqual(listing.title, 'new title')
-        # self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(listing.title, 'new title')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_user_can_update_another_users_listing(self):
         """

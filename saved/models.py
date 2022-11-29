@@ -2,9 +2,15 @@ from django.db import models
 from django.contrib.auth.models import User
 from listing.models import Listing
 
+
 class Saved(models.Model):
+    """
+    Model for saving a listing
+    """
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='saved')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE,
+                              related_name='saved'
+                              )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

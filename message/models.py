@@ -4,6 +4,9 @@ from listing.models import Listing
 
 
 class Message(models.Model):
+    """
+    Model for the messages
+    """
     owner = models.ForeignKey(User,
                               on_delete=models.CASCADE,
                               related_name='sender'
@@ -16,9 +19,12 @@ class Message(models.Model):
     phone_number = models.CharField(max_length=20, blank=True)
     title = models.CharField(max_length=255)
     content = models.TextField()
-    
+
     class Meta:
+        """
+        Sub class to set ordering
+        """
         ordering = ['-created_at']
-        
+
     def __str__(self):
         return f"{self.owner}, {self.title}"
