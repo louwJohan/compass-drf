@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
-from .models import Listing
+from listing.models import Listing
+from .models import Saved
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -28,8 +29,44 @@ class SavedTest(APITestCase):
             image_one='', image_two='', image_three='', image_four='',
             image_five='', image_six='', image_seven='', image_eight=''
         )
+        Saved.objects.create(
+            listing=Listing.objects.get(pk=1), owner=User.objects.get(pk=2)
+        )
 
-    def test_can_save_listing(self):
+    def test_loggedin_user_can_save_listing(self):
+        """
+        Logged in user can save a listing
+        """
         self.client.login(username='peter', password='word')
-        response = self.client.post('/saved/', 1)
+        response = self.client.post('/saved/', {'listing': 2})
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_unauthorized_user_can_save_listing(self):
+        """
+        Unauthorized user can save a listing
+        """
+        response = self.client.post('/saved/', {'listing': 2})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_can_list_saved_listings(self):
+        """
+        Test if you can list all saved items
+        """
+        response = self.client.get('/saved/')
+        self.assertEqual(response.data['count'], 1)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_can_list_saved_detail_with_valid_id(self):
+        """
+        Test if you can list saved detail with valid id
+        """
+        response = self.client.get('/saved/1')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_can_list_saved_detail_with_invalid_id(self):
+        """
+        Test if you can list saved detail with invalid id
+        """
+        response = self.client.get('/saved/100')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+

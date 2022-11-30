@@ -38,3 +38,19 @@ class ProfileTest(APITestCase):
         """
         response = self.client.get('/profiles/100')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_loggedin_user_can_edit_profile(self):
+        """
+        Logged in user can edit profile
+        """
+        self.client.login(username='ben', password='pass')
+        response = self.client.put('/profiles/1', {'profile_name': 'Big Ben'})
+        self.assertEqual(response.data['profile_name'], 'Big Ben')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_unauthorized_user_can_edit_profile(self):
+        """
+        Unauthorized user can edit profile
+        """
+        response = self.client.put('/profiles/1', {'profile_name': 'Big Ben'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
