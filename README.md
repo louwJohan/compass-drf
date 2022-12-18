@@ -124,61 +124,47 @@ Compass API is written to be used as a backend for a real estate type app. It us
 
 -   __F05 Profile page__
     
-    The users must be signed in to access the recipes page and the booking page.
+    The Profile page has the following information
+    - ID 
+    - owner (owner of profile)
+    - created_at (when profile was created)
+    - updated_at ( when profile was updated)
+    - profile_name
+    - profile_content (something about user)
+    - profile_image
+    - is_owner (checks if current user is owner of profile)
+    - listing_count (the amount of listings of the owner)
+    - followers_count (users following owner)
+    - following_count (owner following users)
+    - listings (id of each listing of owner)
+    - saved_count (number of listings saved) 
+    - saved (id of each listing saved)
+    - messages_count (the messages recieved)
+    - messages (id of each message)
+    The information is paginated and only 12 items is displayed per page
+    https://compass-drf.herokuapp.com/profiles displays a list of profiles
+    https://compass-drf.herokuapp.com/profiles/2 display profile with id 2.
+    The owner is the only user that can update or delete the profile
 
-    ![Login](static/images/login.jpg)
-    ![Sign-up](static/images/sign-up.jpg)
 
--   __F06 Booking page User__
+    ![Profile page](images/Profile.jpg)
     
-    The booking page displays a input to choose a day for a visit to the restaurant. When you choose a day the page renders the rest of the form. The form must be completed name, surname, telephone number amount of people and the times available. If a time is fully booked it will not appear in the available times. When a booking is confirmed the page redirects to the booking details.
-    
-    The booking page has a link to view your bookings in a list. If you click on one of the bookings it opens a page with the details of the booking and allows you to delete the booking
-    
-    ![Booking page top](static/images/booking_top.jpg)
-    ![Booking page bottom](static/images/booking_bottom.jpg)
-    ![Booking form](static/images/booking_form.jpg)
-    ![Booking list page](static/images/your_bookings.jpg)
-    ![Booking detail page](static/images/booking_details.jpg)
 
--   __F07 Recipe page User__
+-   __F06 Saved page__
     
-    The recipe link in the navigation directs the logged in user to a list that displays the recipes created by the chef. The user can choose a recipe and click on the link that will redirect them to a page that displays the details of the recipe 
+    The Saved page has the following information
+    - ID 
+    - owner (user that saved listing)
+    - created_at
+    - listing (listing that is saved)
+    The information is paginated and only 12 items is displayed per page
+    https://compass-drf.herokuapp.com/saved displays a list of saved items
+    https://compass-drf.herokuapp.com/saved/1 displays the saved item with id 1
+    The owner is the only user that can delete the saved item
 
-    ![Recipe list](static/images/recipe_list.jpg)
-    ![Recipe Detail](static/images/recipe_detail.jpg)
+    ![Saved page](images/saved.jpg)
     
 
--   __F08 Booking page Staff__
-    
-    Staff members accessing the booking page has more options to choose from. There is a closed list that redirects them to a closed day list, there is also a link to create a new closed day. The link create new closed day will display a form to be completed and when posted will redirect to the item created. They can access a closed day by selecting one from the list and it will redirect them to a detail page where they can edit or delete the item. 
-
-    The booking list link redirects them to a page with an input. They can select a day and it will display the booking for that day. If there are no bookings a message will display saying there are no bookings for that day.
-
-    ![Booking day list](static/images/bookings_for_day.jpg)
-    ![Booking day select](static/images/booking_for_day_choose.jpg)
-    ![Closed list](static/images/closed_days_list.jpg)
-    ![Closed Details](static/images/closed_details.jpg)
-    ![Create closed day](static/images/create_closed.jpg)
-
--   __F09 Menu list(Staff member)__
-    
-    the Menu list page can only be accessed by a staff member. It displays a list of all the items on the menu. When a item is selected it displays the items details and the staff member can edit the item or delete it.
-    The menu list page has a link to create a new menu item and will display a from to be completed.
-
-    ![Menu list](static/images/menu_list.jpg)
-    ![Menu details](static/images/menu_list_details.jpg)
-    ![Menu Create Item](static/images/create_menu_item.jpg)
-
--   __F10 Recipe List(Staff members)__
-    
-    The Recipe list navigation link is only displayed to staff members. The link displays a recipe list page and has a link to create new recipes. The create new recipe page displays a from to be completed to create a new recipe. 
-
-    When a recipe is selected from the list the details of the recipe is displayed with links to edit or delete the recipe.
-
-    ![Recipe List](static/images/recipe_list_staff.jpg)
-    ![Recipe Detail](static/images/recipe_detail_staff.jpg)
-    ![Recipe create](static/images/create_new_recipe.jpg)
 
 
 ### Features which could be implemented in the future
@@ -187,218 +173,45 @@ Compass API is written to be used as a backend for a real estate type app. It us
     
     Add login by using social accounts
 
--   __Recipe likes__
+-   __Listing likes__
     
-    Implement function for users to like recipes 
-
-## Design
-
--   ### Wireframes
-Balsamiq was used to create the wire frames for the project and was used as a guide for the project
-![Home](static/images/home_wireframe.jpg)
-![Menu](static/images/menu_wireframe.jpg)
-![Booking](static/images/booking_day_wf.jpg)
-![Recipes](static/images/recipe_wf.jpg)
-![Recipe Detail](static/images/recipe_detailwf.jpg)
+    Implement function for users to like listings
 
 
 **Database Design**
 
-- PostgreSQL was used for the database
+- PostgreSQL was used for the database originally
+- Database was migrated to ElephantSQL 
 
-**Recipe Post**
-- Stores all the data for the recipes
-
-| **Key**        |  **Type**     | **Purpose**|
-|-------------- |-------------- |-------------|
-| _id           |  ObjectId     | ObjectId of this document
-| title   |   String      | stores the title of the recipe
-| author     |   User Id     | stores the id of the User object
-| content     |   String      | stores the content of the recipe
-| featured_image        |   Image      | stores a image of the recipe
-| created_on      |   date      | stores the date the recipe was created 
-
-**TimeSlot**
-- Stores all the bookings made by customers
-
-| **Key**        |  **Type**     | **Purpose**|
-|-------------- |-------------- |-------------|
-| _id           |  ObjectId     | ObjectId of this document
-| date   |   string      | stores the date of the booking
-| time     |   string     | stores the time of the booking
-| first_name     |   String      | stores the customers first name
-| last_name        |   String     | stores the customers Last name
-| phone      |   number     | stores the customers number
-| number_of_people     |   number      | stores the number of people attending
-| user      |   User Id      | stores the Users Id
-
-**Closed**
-- Stores all the dates the restaurant is closed
-
-| **Key**        |  **Type**     | **Purpose**|
-|-------------- |-------------- |-------------|
-| _id           |  ObjectId     | ObjectId of this document
-| day  |   date     | stores the date 
-| reason    |   string     | stores the reason the store is closed
-| user      |   User Id      | stores the Users Id that created the event
-
-**FoodMenu**
-- Stores all the menu items
-
-| **Key**        |  **Type**     | **Purpose**|
-|-------------- |-------------- |-------------|
-| _id           |  ObjectId     | ObjectId of this document
-| title  |   string      | stores the title of the dish
-| description     |   string     | stores a short description of the dish
-| course     |   number      | stores a number indicating to a course
-| price        |   number    | stores the price of the dish
+![Database](images/database.jpg)
 
 
 ## Technologies Used
 
 ### Languages Used
 
--   [HTML5](https://en.wikipedia.org/wiki/HTML5)
--   [CSS3](https://en.wikipedia.org/wiki/Cascading_Style_Sheets)
 -   [Python](https://www.python.org/)
 
 ### Frameworks, Libraries & Programs Used
 
--   [Google Fonts:](https://fonts.google.com/) used for the Raleway font
--   [Font Awesome:](https://fontawesome.com/) was used to add icons for aesthetic and UX purposes.
--   [Git:](https://git-scm.com/) was used for version control by utilising the Gitpod terminal to commit to Git and Push to GitHub.
--   [GitHub:](https://github.com/) is used as the respository for the project code after being pushed from Git. In addition, for this project GitHub was used for the agile development aspect through the use of User Stories (GitHub Issues) and tracking them on a Kanban board.
--   [Balsamiq:](https://balsamiq.com/) was used to create the wireframes during the design process.
+-   [Django Rest Framework](https://www.django-rest-framework.org/) was used as the framework to support rapid and secure development of the application
+-   [Git:](https://git-scm.com/) was used for version control by utilizing the Gitpod terminal to commit to Git and Push to GitHub.
+-   [GitHub:](https://github.com/) is used as the repository for the project code after being pushed from Git. In addition, for this project GitHub was used for the agile development aspect through the use of User Stories (GitHub Issues) and tracking them on a Kanban board.
 -   [Django](https://www.djangoproject.com/) was used as the framework to support rapid and secure development of the application
--   [Bootstrap](https://getbootstrap.com/) was used to build responsive web pages
 -   [Gunicorn](https://gunicorn.org/) was used as the Web Server to run Django on Heroku
 -   [dj_database_url](https://pypi.org/project/dj-database-url/) library used to allow database urls to connect to the postgres db
 -   [psycopg2](https://pypi.org/project/psycopg2/) database adapter used to support the connection to the postgres db
 -   [Cloudinary](https://cloudinary.com/) used to store the images used by the application
 -   [Django allauth](https://django-allauth.readthedocs.io/en/latest/index.html) used for account registration and authentication
--   [coverage](https://coverage.readthedocs.io/en/coverage-5.5/) used to check how much of the python code has been covered by 
-automated tests
 
 ## Testing
+- Test were written for all apps
+- in total 25 test was written and all passed
+- Django Rest Frameworks API test case was used to test 
 
 ### Validator Testing 
-
-- [HTML Validator](https://validator.w3.org/)
-
-    - As this project uses Django templates the html has been validated by manually clicking through the application pages, copying the source of the rendered pages and then validating this version of the html using the W3C Validator (link shown above).
-
-    - Results: All pages passed without errors except the Recipe detail page. An error was indicated for use of % in width attribute in image tag, expected a number.
-  
-
-- [CSS Validator](https://jigsaw.w3.org/css-validator/)
-
-  - Results: No errors were found in style.css
-
-
-- [Python Validator](http://pep8online.com/)
-
-  <details>
-    <summary>Booking admin.py</summary>
-
-  [Booking admin.py](pep8/booking_admin.txt)
-  </details>
-  
-  <details>
-    <summary>Booking models.py</summary>
-    
-  [Booking models.py](pep8/booking_models.txt)
-  </details>
-
-  <details>
-    <summary>Booking test_views.py</summary>
-    
-  [Booking test_views.py](pep8/booking_test_views.txt)
-  </details>
-
-  <details>
-    <summary>Booking views.py</summary>
-    
-  [Booking views.py](pep8/booking_views.txt)
-  </details>
-  
-  <details>
-    <summary>Easy Recipes admin.py</summary>
-    
-  [Easy Recipes admin.py](pep8/easy_recipe_admin.txt)
-  </details>
-  
-  <details>
-    <summary>Easy Recipes models.py</summary>
-    
-  [Easy Recipes models.py](pep8/easy_recipe_models.txt)
-  </details>
-
-  <details>
-    <summary>Easy Recipes test_views.py</summary>
-    
-  [Easy Recipes test_views.py](pep8/easy_recipe_test_views.txt)
-  </details>
-
-  <details>
-    <summary>Easy Recipes views.py</summary>
-    
-  [Easy Recipes views.py](pep8/easy_recipe_views.txt)
-  </details>
-
-  <details>
-    <summary>Home views.py</summary>
-    
-  [Home views.py](pep8/home_views.txt)
-  </details>
-
-  <details>
-    <summary>Menu admin.py</summary>
-    
-  [Menu admin.py](pep8/menu_admin.txt)
-  </details>
-
-  <details>
-    <summary>Menu models.py</summary>
-    
-  [Menu models.py](pep8/menu_models.txt)
-  </details>
-  
-  <details>
-    <summary>Menu test_views.py</summary>
-    
-  [Menu test_views.py](pep8/menu_test_views.txt)
-  </details>
-
-  <details>
-    <summary>Menu views.py</summary>
-    
-  [Menu views.py](pep8/menu_views.txt)
-  </details>
-
-### Automated Testing
-
-   - [Django testing tools](https://docs.djangoproject.com/en/3.2/topics/testing/tools/) were used to test the application python code.  
-   - DB tests were run in the development environment against a local SQLite3 database. 
-   - Tests were written for the following files :
-
-      - Booking tests for [views.py](booking/views.py):  test file: [test_views.py](booking/test_views.py)
-      - Easy Recipe tests for [views.py](easy_recipe/views.py): test file: [test_views.py](easy_recipe/test_views.py)
-      - Menu tests for [views.py](menu/views.py):  test file: [test_views.py](menu/test_views.py)
-      - Home tests for [views.py](home/views.py): test file: [test_views.py](home/test_views.py)
-
-  - Django test results and coverage :   
-    ![Python Test Results](static/images/coverage1.jpg)
-    ![Python Test Results Continued](static/images/coverage2.jpg)
-
-
-### Browser Compatibility
-
-- Chrome DevTools was used to test the responsiveness of the application on different screen sizes.
- 
-    
-### Manual Testing Test Cases and Results
-
-- The application was tested for both site users and staff users. Recipes was added, updated and deleted. Menu add items, edit and delete items was tested. Booking was tested for two users booking at the same time for the same time slot. The reset password was tested with the email confirmation. Adding, deleting and editing closed days was tested. Customer booking and deleting was tested. All links and navigation links were tested.
+- Python extension in Gitpod was used for formatting code and validating python code
+![Validator](images/python.jpg)
 
 ### Known bugs
 
@@ -408,7 +221,7 @@ automated tests
 
 ### How to Clone the Repository 
 
-- Go to the https://github.com/louwJohan/project4-ci repository on GitHub 
+- Go to the https://github.com/louwJohan/compass-drf repository on GitHub 
 - Click the "Code" button to the right of the screen, click HTTPs and copy the link there
 - Open a GitBash terminal and navigate to the directory where you want to locate the clone
 - On the command line, type "git clone" then paste in the copied url and press the Enter key to begin the clone process
@@ -451,10 +264,10 @@ automated tests
 
 ### Connect the Heroku app to the GitHub repository
 - Go to the Application Configuration page for the application on Heroku and click on the Deploy tab.
-- Select GitHub as the Deployment Method and if prompted, confirm that you want to connect to GitHub. Enter the name of the github repository (the one used for this project is (https://github.com/louwJohan/project4-ci) and click on Connect to link up the Heroku app to the GitHub repository code.
+- Select GitHub as the Deployment Method and if prompted, confirm that you want to connect to GitHub. Enter the name of the github repository (the one used for this project is (https://github.com/louwJohan/compass-drf) and click on Connect to link up the Heroku app to the GitHub repository code.
 - Scroll down the page and choose to either Automatically Deploy each time changes are pushed to GitHub, or Manually deploy - for this project Manual Deploy was selected.
 - The application can be run from the Application Configuration page by clicking on the Open App button.
-- The live link for this project is (https://the-smoking-goat.herokuapp.com/)
+- The live link for this project is (https://compass-drf.herokuapp.com/)
 
 ### Final Deployment steps
 Once code changes have been completed and tested on localhost, the application can be prepared for Heroku deployment as follows :
@@ -468,13 +281,5 @@ Once code changes have been completed and tested on localhost, the application c
 ## Credits 
 
 ### Code 
-- Much of the coding and testing relies heavily on information in the "Hello Django" and "I Think Therefore I Blog" walkthroughs in the Code Institue Full Stack Frameworks module. 
-- 
+-  Code examples was used from the Django rest framework tutorials 
 
-
-### Media 
-- The Raleway font used was imported from [Google Fonts](https://fonts.google.com/)
-- Fontawesome was used for icons [Font Awesome](https://fontawesome.com/)
-- The applicaiton favicon was created from the "exchange" icon image on [Font Awesome](https://fontawesome.com/) 
-- Pexels.com was used for all the images[Pexels](https://www.pexels.com/)
-  
