@@ -21,7 +21,7 @@ Compass API is written to be used as a backend for a real estate type app. It us
 ### User stories :
 
 * US01: Register/Login
-  - As a **Site User**I can **create a profile** so that **I can access the features of the site**
+  - As a **Site User** I can **create a profile** so that **I can access the features of the site**
 * US02: Post a listing
   - As a **Site User** I can **log in** so that **I can list a property for sale**
 * US03: Follow a User
@@ -279,7 +279,7 @@ Once code changes have been completed and tested on localhost, the application c
 
 
 ## Credits 
-
+- Code was used from the Moments DRF code along
 ### Code 
 -  Code examples was used from the Django rest framework tutorials 
 
